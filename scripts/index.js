@@ -11,11 +11,14 @@
 
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
+const editButton = profile.querySelector(".profile__edit-button");
 
 
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupAdd = document.querySelector(".popup_type_new-card");
 const popupImage = document.querySelector(".popup popup_type_image");
+const cardTemplate = document.querySelector(".card-template");
+
 
 function crateCard(data) {
   const cardsElement = cardTemplate.cloneNode(true);
@@ -56,8 +59,74 @@ function openPopup(form) {
   });
 }
 
+function closePopup(form) {
+  document.removeEventListener('keydown', closeEscape);
+  document.removeEventListener('click', closeBackground);
+  form.classList.remove('popup_is-opened');
+  resetPopup(form);
+}
+
+function resetPopup(form) {
+  if (form.querySelector('.popup__form')) {
+    form.querySelector('.popup__form').reset();
+  }
+}
+
 addButton.addEventListener('click', () => {
   openPopup(popupAdd);
   closeEscapeAdd(popupAdd);
   closeBackground(popupAdd);
 });
+
+editButton.addEventListener('click', function () {
+  openPopup(popupEdit);
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+  closeEscapeAdd(popupEdit);
+  closeBackground(popupEdit);
+});
+
+const closeEscapeAdd = (form) => {
+  document.addEventListener('keydown', closeEscape)
+};
+
+const closeEscape = (evt) => {
+  const activePopup = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(activePopup);
+  }
+}
+
+const closeBackground = (form) => {
+  document.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup__background')) {
+      closePopup(form);
+    }
+  });
+};
+
+formEdit.addEventListener("submit", formEditSubmitHandler);
+submitAdd.addEventListener('click', formAddSubmitHandler);
+
+function formEditSubmitHandler(evt) {
+  evt.preventDefault();
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+  closePopup(popupEdit);
+}
+
+function renderCard(data) {
+  list.prepend(createCard(data))
+}
+
+initialCards.forEach((data) => {
+  renderCard(data);
+})
+
+function formAddSubmitHandler(evt) {
+  evt.preventDefault();
+  renderCard({ name: inputPlace.value, link: inputUrl.value });
+  closePopup(popupAdd);
+  submitAdd.disabled = "true";
+  submitAdd.classList.add('popup__save-button_status_disabled');
+}
