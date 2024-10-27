@@ -18,9 +18,10 @@ const popupEdit = document.querySelector(".popup_type_edit");
 const popupAdd = document.querySelector(".popup_type_new-card");
 const popupImage = document.querySelector(".popup popup_type_image");
 const cardTemplate = document.querySelector(".card-template");
+const list = document.querySelector(".cards");
 
 
-function crateCard(data) {
+function createCard(data) {
   const cardsElement = cardTemplate.cloneNode(true);
   const titleImage = cardsElement.querySelector('.card__image');
   const titleCard = cardsElement.querySelector('.card__title');
@@ -32,7 +33,7 @@ function crateCard(data) {
   });
 
   deleteButton.addEventListener('click', function handleclick() {
-    deleteButton.closest('.element').remove();
+    deleteButton.closest('.card').remove();
   });
 
   titleImage.addEventListener('click', function handleclick() {
@@ -91,7 +92,7 @@ const closeEscapeAdd = (form) => {
 };
 
 const closeEscape = (evt) => {
-  const activePopup = document.querySelector('.popup_opened');
+  const activePopup = document.querySelector('.popup_is-opened');
   if (evt.key === 'Escape') {
     closePopup(activePopup);
   }
