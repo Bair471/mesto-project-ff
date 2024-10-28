@@ -14,10 +14,17 @@ const addButton = profile.querySelector(".profile__add-button");
 const editButton = profile.querySelector(".profile__edit-button");
 
 
+const formEdit = document.getElementById('edit-profile');
+const submitAdd = document.getElementById('edit-profile-submit-button');
+
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupAdd = document.querySelector(".popup_type_new-card");
-const popupImage = document.querySelector(".popup popup_type_image");
-const cardTemplate = document.querySelector(".card-template");
+const popupAddForm = popupAdd.querySelector(".popup__form");
+const popupAddInputPlace = popupAdd.querySelector(".popup__input_type_card-name");
+const popupAddInputUrl = popupAdd.querySelector(".popup__input_type_url");
+
+const popupImage = document.querySelector(".popup .popup_type_image");
+const cardTemplate = document.getElementById('card-template');
 const list = document.querySelector(".cards");
 
 
