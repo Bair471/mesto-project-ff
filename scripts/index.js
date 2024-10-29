@@ -26,10 +26,11 @@ const popupAddInputUrl = popupAdd.querySelector(".popup__input_type_url");
 const popupImage = document.querySelector(".popup .popup_type_image");
 const cardTemplate = document.getElementById('card-template');
 const list = document.querySelector(".cards");
+const buttonLike = document.querySelector('.card__like-button');
 
 
 function createCard(data) {
-  const cardsElement = cardTemplate.cloneNode(true);
+  const cardsElement = cardTemplate.content.cloneNode(true);
   const titleImage = cardsElement.querySelector('.card__image');
   const titleCard = cardsElement.querySelector('.card__title');
   const buttonLike = cardsElement.querySelector('.card__like-button');
