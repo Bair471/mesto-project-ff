@@ -22,8 +22,10 @@ const popupAdd = document.querySelector(".popup_type_new-card");
 const popupAddForm = popupAdd.querySelector(".popup__form");
 const popupAddInputPlace = popupAdd.querySelector(".popup__input_type_card-name");
 const popupAddInputUrl = popupAdd.querySelector(".popup__input_type_url");
+const popupImage = document.querySelector("#popup_type_image");
+const imagePopupCaption = popupImage.querySelector(".popup__caption");
+const imagePopupImg = popupImage.querySelector(".popup__image");
 
-const popupImage = document.querySelector(".popup .popup_type_image");
 const cardTemplate = document.getElementById('card-template');
 const list = document.querySelector(".cards");
 const buttonLike = document.querySelector('.card__like-button');
@@ -44,7 +46,7 @@ function createCard(data) {
     deleteButton.closest('.card').remove();
   });
 
-  titleImage.addEventListener('click', function handleclick() {
+  titleImage.addEventListener('click', function handledPhotoCards() {
     imagePopupCaption.textContent = data.name;
     imagePopupImg.src = data.link;
     imagePopupImg.alt = data.name;
