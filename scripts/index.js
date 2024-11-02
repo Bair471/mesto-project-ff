@@ -117,7 +117,7 @@ const closeBackground = (form) => {
 };
 
 formEdit.addEventListener("submit", formEditSubmitHandler);
-submitAdd.addEventListener('click', formAddSubmitHandler);
+popupAddForm.addEventListener('submit', formAddSubmitHandler);
 
 function formEditSubmitHandler(evt) {
   evt.preventDefault();
@@ -136,8 +136,10 @@ initialCards.forEach((data) => {
 
 function formAddSubmitHandler(evt) {
   evt.preventDefault();
-  renderCard({ name: inputPlace.value, link: inputUrl.value });
+  const name = popupAddInputPlace.value; 
+  const link = popupAddInputUrl.value; 
+  renderCard({ name, link });
   closePopup(popupAdd);
-  submitAdd.disabled = "true";
+  submitAdd.disabled = true;
   submitAdd.classList.add('popup__save-button_status_disabled');
 }
