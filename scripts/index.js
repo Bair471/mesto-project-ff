@@ -1,20 +1,14 @@
-// @todo: Темплейт карточки
-
-// @todo: DOM узлы
-
-// @todo: Функция создания карточки
-
-// @todo: Функция удаления карточки
-
-// @todo: Вывести карточки на страницу
-
-
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
 const editButton = profile.querySelector(".profile__edit-button");
 
 const formEdit = document.getElementById('edit-profile');
 const submitAdd = document.getElementById('edit-profile-submit-button');
+
+const nameInput = document.querySelector('.popup__input.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input.popup__input_type_description');
+const profileName = document.querySelector('.profile__title');
+const profileJob = document.querySelector('.profile__description');
 
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupAdd = document.querySelector(".popup_type_new-card");
