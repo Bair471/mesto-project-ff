@@ -13,7 +13,6 @@ const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
 const editButton = profile.querySelector(".profile__edit-button");
 
-
 const formEdit = document.getElementById('edit-profile');
 const submitAdd = document.getElementById('edit-profile-submit-button');
 
@@ -28,8 +27,6 @@ const imagePopupImg = popupImage.querySelector(".popup__image");
 
 const cardTemplate = document.getElementById('card-template');
 const list = document.querySelector(".cards");
-const buttonLike = document.querySelector('.card__like-button');
-
 
 function createCard(data) {
   const cardsElement = cardTemplate.content.cloneNode(true);
