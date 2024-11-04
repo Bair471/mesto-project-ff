@@ -75,19 +75,26 @@ function resetPopup(form) {
   }
 }
 
-addButton.addEventListener('click', () => {
-  openPopup(popupAdd);
-  closeEscapeAdd(popupAdd);
-  closeBackground(popupAdd);
-});
+function formEditSubmitHandler(evt) {
+  evt.preventDefault();
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+  closePopup(popupEdit);
+}
 
-editButton.addEventListener('click', function () {
-  openPopup(popupEdit);
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-  closeEscapeAdd(popupEdit);
-  closeBackground(popupEdit);
-});
+function renderCard(data) {
+  list.prepend(createCard(data));
+}
+
+function formAddSubmitHandler(evt) {
+  evt.preventDefault();
+  const name = popupAddInputPlace.value; 
+  const link = popupAddInputUrl.value; 
+  renderCard({ name, link });
+  closePopup(popupAdd);
+  submitAdd.disabled = true;
+  submitAdd.classList.add('popup__save-button_status_disabled');
+}
 
 const closeEscapeAdd = (form) => {
   document.addEventListener('keydown', closeEscape);
@@ -108,30 +115,23 @@ const closeBackground = (form) => {
   });
 };
 
+addButton.addEventListener('click', () => {
+  openPopup(popupAdd);
+  closeEscapeAdd(popupAdd);
+  closeBackground(popupAdd);
+});
+
+editButton.addEventListener('click', function () {
+  openPopup(popupEdit);
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+  closeEscapeAdd(popupEdit);
+  closeBackground(popupEdit);
+});
+
 formEdit.addEventListener("submit", formEditSubmitHandler);
 popupAddForm.addEventListener('submit', formAddSubmitHandler);
-
-function formEditSubmitHandler(evt) {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopup(popupEdit);
-}
-
-function renderCard(data) {
-  list.prepend(createCard(data));
-}
 
 initialCards.forEach((data) => {
   renderCard(data);
 });
-
-function formAddSubmitHandler(evt) {
-  evt.preventDefault();
-  const name = popupAddInputPlace.value; 
-  const link = popupAddInputUrl.value; 
-  renderCard({ name, link });
-  closePopup(popupAdd);
-  submitAdd.disabled = true;
-  submitAdd.classList.add('popup__save-button_status_disabled');
-}
