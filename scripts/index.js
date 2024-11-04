@@ -33,8 +33,9 @@ function createCard(data) {
     buttonLike.classList.toggle('card__like-button_is-active');
   });
 
-  deleteButton.addEventListener('click', function handleclick() {
+  deleteButton.addEventListener('click', function handleDeleteClick() {
     deleteButton.closest('.card').remove();
+    // Вызываем функцию onDelete здесь, если она будет передана
   });
 
   titleImage.addEventListener('click', function handledPhotoCards() {
@@ -89,7 +90,7 @@ editButton.addEventListener('click', function () {
 });
 
 const closeEscapeAdd = (form) => {
-  document.addEventListener('keydown', closeEscape)
+  document.addEventListener('keydown', closeEscape);
 };
 
 const closeEscape = (evt) => {
@@ -97,7 +98,7 @@ const closeEscape = (evt) => {
   if (evt.key === 'Escape') {
     closePopup(activePopup);
   }
-}
+};
 
 const closeBackground = (form) => {
   document.addEventListener('click', (evt) => {
@@ -118,12 +119,12 @@ function formEditSubmitHandler(evt) {
 }
 
 function renderCard(data) {
-  list.prepend(createCard(data))
+  list.prepend(createCard(data));
 }
 
 initialCards.forEach((data) => {
   renderCard(data);
-})
+});
 
 function formAddSubmitHandler(evt) {
   evt.preventDefault();
