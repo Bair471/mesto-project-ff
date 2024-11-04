@@ -35,7 +35,7 @@ function createCard(data) {
 
   deleteButton.addEventListener('click', function handleDeleteClick() {
     deleteButton.closest('.card').remove();
-    // Вызываем функцию onDelete здесь, если она будет передана
+    onDelete();
   });
 
   titleImage.addEventListener('click', function handledPhotoCards() {
