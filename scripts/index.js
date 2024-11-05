@@ -22,6 +22,10 @@ const imagePopupImg = popupImage.querySelector(".popup__image");
 const cardTemplate = document.getElementById('card-template');
 const list = document.querySelector(".cards");
 
+function deleteCards(deleteButton) {
+  deleteButton.closest('.card').remove();
+}
+
 function createCard(data, onDelete) {
   const cardsElement = cardTemplate.content.cloneNode(true);
   const titleImage = cardsElement.querySelector('.card__image');
@@ -33,9 +37,6 @@ function createCard(data, onDelete) {
     buttonLike.classList.toggle('card__like-button_is-active');
   });
   
-  function onDelete(deleteButton) {
-    deleteButton.closest('.card').remove();
-  }
   deleteButton.addEventListener('click', function handleDeleteClick() {
     onDelete(deleteButton);
   });
@@ -85,7 +86,7 @@ function formEditSubmitHandler(evt) {
 }
 
 function renderCard(data) {
-  list.prepend(createCard(data));
+  list.prepend(createCard(data, deleteCards));
 }
 
 function formAddSubmitHandler(evt) {
