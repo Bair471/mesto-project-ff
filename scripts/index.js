@@ -22,7 +22,7 @@ const imagePopupImg = popupImage.querySelector(".popup__image");
 const cardTemplate = document.getElementById('card-template');
 const list = document.querySelector(".cards");
 
-function createCard(data) {
+function createCard(data, onDelete) {
   const cardsElement = cardTemplate.content.cloneNode(true);
   const titleImage = cardsElement.querySelector('.card__image');
   const titleCard = cardsElement.querySelector('.card__title');
@@ -35,7 +35,7 @@ function createCard(data) {
 
   deleteButton.addEventListener('click', function handleDeleteClick() {
     deleteButton.closest('.card').remove();
-    onDelete();
+    onDelete(deleteButton);
   });
 
   titleImage.addEventListener('click', function handledPhotoCards() {
