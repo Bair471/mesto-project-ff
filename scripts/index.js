@@ -32,9 +32,11 @@ function createCard(data, onDelete) {
   buttonLike.addEventListener('click', function handleLikeClick() {
     buttonLike.classList.toggle('card__like-button_is-active');
   });
-
-  deleteButton.addEventListener('click', function handleDeleteClick() {
+  
+  function onDelete(deleteButton) {
     deleteButton.closest('.card').remove();
+  }
+  deleteButton.addEventListener('click', function handleDeleteClick() {
     onDelete(deleteButton);
   });
 
