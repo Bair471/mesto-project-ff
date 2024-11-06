@@ -78,7 +78,7 @@ function resetPopup(form) {
   }
 }
 
-function formEditSubmitHandler(evt) {
+function handleFormEditSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
@@ -89,7 +89,7 @@ function renderCard(data) {
   list.prepend(createCard(data, deleteCards));
 }
 
-function formAddSubmitHandler(evt) {
+function handleFormAddSubmit(evt) {
   evt.preventDefault();
   const name = popupAddInputPlace.value; 
   const link = popupAddInputUrl.value; 
@@ -132,8 +132,8 @@ editButton.addEventListener('click', function () {
   closeBackground(popupEdit);
 });
 
-formEdit.addEventListener("submit", formEditSubmitHandler);
-popupAddForm.addEventListener('submit', formAddSubmitHandler);
+formEdit.addEventListener("submit", handleFormEditSubmit);
+popupAddForm.addEventListener('submit', handleFormAddSubmit);
 
 initialCards.forEach((data) => {
   renderCard(data);
