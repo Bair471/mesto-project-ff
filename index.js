@@ -41,7 +41,7 @@ function handleFormAddSubmit(evt) {
 
 function renderCard(data) {
   const list = document.querySelector(".cards");
-  list.prepend(createCard(data, deleteCard));
+  list.prepend(createCards(data, deleteCards));
 }
 
 
