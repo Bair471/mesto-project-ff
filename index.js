@@ -1,6 +1,7 @@
 import './index.css';
-import { initialCards, createCards, deleteCards } from './components/cards';
-import { openModal, closeModal, resetPopup, closeEscapeAdd, closeBackground } from './components/modal';
+import { initialCards, createCard, deleteCards } from './src/components/cards.js';
+import { closePopup, resetPopup } from './src/components/modal.js';
+import { openPopup, closeBackground, closeEscapeAdd } from './src/components/modal.js';
 
 
 const profile = document.querySelector(".profile");
@@ -21,12 +22,19 @@ const popupAddForm = popupAdd.querySelector(".popup__form");
 const popupAddInputPlace = popupAdd.querySelector(".popup__input_type_card-name");
 const popupAddInputUrl = popupAdd.querySelector(".popup__input_type_url");
 
+const list = document.querySelector(".cards");
+
+
 
 function handleFormEditSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  closeModal(popupEdit);
+  closePopup(popupEdit);
+}
+
+function renderCard(data) {
+  list.prepend(createCard(data, deleteCards));
 }
 
 function handleFormAddSubmit(evt) {
@@ -34,25 +42,19 @@ function handleFormAddSubmit(evt) {
   const name = popupAddInputPlace.value; 
   const link = popupAddInputUrl.value; 
   renderCard({ name, link });
-  closeModal(popupAdd);
+  closePopup(popupAdd);
   submitAdd.disabled = true;
   submitAdd.classList.add('popup__save-button_status_disabled');
 }
 
-function renderCard(data) {
-  const list = document.querySelector(".cards");
-  list.prepend(createCards(data, deleteCards));
-}
-
-
 addButton.addEventListener('click', () => {
-  openModal(popupAdd);
+  openPopup(popupAdd);
   closeEscapeAdd(popupAdd);
   closeBackground(popupAdd);
 });
 
 editButton.addEventListener('click', function () {
-  openModal(popupEdit);
+  openPopup(popupEdit);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   closeEscapeAdd(popupEdit);
@@ -61,7 +63,6 @@ editButton.addEventListener('click', function () {
 
 formEdit.addEventListener("submit", handleFormEditSubmit);
 popupAddForm.addEventListener('submit', handleFormAddSubmit);
-
 
 initialCards.forEach((data) => {
   renderCard(data);

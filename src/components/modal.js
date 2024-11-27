@@ -1,21 +1,21 @@
-export function openModal(popup) {
-  const closeButton = popup.querySelector(".popup__close");
-  popup.classList.add('popup_is-opened');
+export function openPopup(form) {
+  const closeButton = form.querySelector(".popup__close");
+  form.classList.add('popup_is-opened');
   closeButton.addEventListener('click', function () {
-    closeModal(popup);
+    closePopup(form);
   });
 }
 
-export function closeModal(popup) {
+export function closePopup(form) {
   document.removeEventListener('keydown', closeEscape);
   document.removeEventListener('click', closeBackground);
-  popup.classList.remove('popup_is-opened');
-  resetPopup(popup);
+  form.classList.remove('popup_is-opened');
+  resetPopup(form);
 }
 
-export function resetPopup(popup) {
-  if (popup.querySelector('.popup__form')) {
-    popup.querySelector('.popup__form').reset();
+export function resetPopup(form) {
+  if (form.querySelector('.popup__form')) {
+    form.querySelector('.popup__form').reset();
   }
 }
 
@@ -26,14 +26,14 @@ export function closeEscapeAdd(form) {
 export function closeEscape(evt) {
   const activePopup = document.querySelector('.popup_is-opened');
   if (evt.key === 'Escape') {
-    closeModal(activePopup);
+    closePopup(activePopup);
   }
 }
 
 export function closeBackground(form) {
   document.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup__background')) {
-      closeModal(form);
+      closePopup(form);
     }
   });
 }
