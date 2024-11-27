@@ -1,7 +1,6 @@
 import './index.css';
 import { initialCards, createCard, deleteCards } from './components/cards.js';
-import { closePopup, resetPopup } from './components/modal.js';
-import { openPopup, closeBackground, closeEscapeAdd } from './components/modal.js';
+import { openPopup, closePopup, closeBackground, closeEscapeAdd } from './components/modal.js';
 
 
 const profile = document.querySelector(".profile");
