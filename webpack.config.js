@@ -9,7 +9,7 @@ const CssNano = require('cssnano');
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 module.exports = {
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
   },
@@ -24,11 +24,11 @@ module.exports = {
       filename: 'index.css',
     }),
 
-    new HtmlWebpackPlugin({template: 'index.html'}),
+    new HtmlWebpackPlugin({template: './src/index.html'}),
 
     new CopyPlugin({
       patterns: [
-        { from: "public/images", to: "images" }
+        { from: "src/public/images", to: "images" }
       ],
     }),
   ],
