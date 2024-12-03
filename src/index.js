@@ -1,6 +1,16 @@
 import './index.css';
-import { initialCards, createCard, deleteCards } from './components/cards.js';
+import { initialCards } from './components/cards.js'
+import { createCard, deleteCards, handleLikeClick} from './components/card.js';
 import { openPopup, closePopup, closeBackground, closeEscapeAdd } from './components/modal.js';
+
+function handleOpenImage(imageLink, imageName) {
+  imagePopupImg.src = imageLink;
+  imagePopupImg.alt = imageName;  
+  imagePopupCaption.textContent = imageName;
+
+  openPopup(popupImage);
+}
+
 
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
@@ -19,8 +29,18 @@ const popupAdd = document.querySelector(".popup_type_new-card");
 const popupAddForm = popupAdd.querySelector(".popup__form");
 const popupAddInputPlace = popupAdd.querySelector(".popup__input_type_card-name");
 const popupAddInputUrl = popupAdd.querySelector(".popup__input_type_url");
+const popupImage = document.querySelector("#popup_type_image");
+const imagePopupCaption = popupImage.querySelector(".popup__caption");
+const imagePopupImg = popupImage.querySelector(".popup__image");
 
 const list = document.querySelector(".cards");
+
+console.log(handleOpenImage);
+
+initialCards.forEach(function (data) {
+  const card = createCard(data, deleteCards, handleOpenImage, handleLikeClick);
+  list.append(card);
+});
 
 function handleFormEditSubmit(evt) {
   evt.preventDefault();
@@ -28,7 +48,7 @@ function handleFormEditSubmit(evt) {
   profileJob.textContent = jobInput.value;
   closePopup(popupEdit);
 }
-
+console.log(handleOpenImage);
 function renderCard(data) {
   list.prepend(createCard(data, deleteCards));
 }

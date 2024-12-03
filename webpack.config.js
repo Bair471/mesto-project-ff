@@ -3,32 +3,34 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const Autoprefixer = require('autoprefixer');
-const CssNano = require('cssnano');
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    clean: true,
   },
-
+  resolve: {
+    extensions: ['.js', '.json'],
+  },
   devServer: {
-    open: true, host: 'localhost'
+    open: true,
+    host: 'localhost',
+    port: 8080,
+    static: path.resolve(__dirname, 'dist'),
   },
-
   plugins: [
-
     new MiniCssExtractPlugin({
-      filename: 'index.css',
+      filename: '[name].css',
     }),
-
-    new HtmlWebpackPlugin({template: './src/index.html'}),
-
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
     new CopyPlugin({
       patterns: [
-        { from: "src/public/images", to: "images" }
+        { from: "src/images", to: "images" },
       ],
     }),
   ],
@@ -44,7 +46,10 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
@@ -60,24 +65,22 @@ module.exports = {
           filename: "fonts/[name][hash][ext][query]",
         },
       },
-    ]
+    ],
   },
   optimization: {
     minimize: true,
     minimizer: [
       new TerserPlugin(),
-      new CssMinimizerPlugin(),
       new ImageMinimizerPlugin({
         minimizer: {
           implementation: ImageMinimizerPlugin.imageminGenerate,
           options: {
             plugins: [
-              ["mozjpeg", { quality: 75 }],
               ["pngquant", { quality: [0.6, 0.8] }],
             ],
           },
         },
-      }),,
+      }),
     ],
   },
 };
