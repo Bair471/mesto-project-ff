@@ -1,5 +1,4 @@
 function createCard(data, onDelete, handleOpenImage, handleLikeClick) {
-  console.log(handleOpenImage);
   const cardTemplate = document.getElementById('card-template');
   const cardsElement = cardTemplate.content.cloneNode(true);
   const titleImage = cardsElement.querySelector('.card__image');

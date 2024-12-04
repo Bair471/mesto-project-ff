@@ -1,7 +1,7 @@
 import './index.css';
 import { initialCards } from './components/cards.js'
-import { createCard, deleteCards, handleLikeClick} from './components/card.js';
-import { openPopup, closePopup, closeBackground, closeEscapeAdd } from './components/modal.js';
+import { createCard, deleteCards, handleLikeClick } from './components/card.js';
+import { openPopup, closePopup } from './components/modal.js';
 
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
@@ -16,13 +16,16 @@ const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__description');
 
 const popupEdit = document.querySelector(".popup_type_edit");
+const popupEditCloseButton = popupEdit.querySelector(".popup__close");
 const popupAdd = document.querySelector(".popup_type_new-card");
+const popupAddCloseButton = popupAdd.querySelector(".popup__close");
 const popupAddForm = popupAdd.querySelector(".popup__form");
 const popupAddInputPlace = popupAdd.querySelector(".popup__input_type_card-name");
 const popupAddInputUrl = popupAdd.querySelector(".popup__input_type_url");
 const popupImage = document.querySelector("#popup_type_image");
 const imagePopupCaption = popupImage.querySelector(".popup__caption");
 const imagePopupImg = popupImage.querySelector(".popup__image");
+const imagePopupCloseButton = popupImage.querySelector(".popup__close");
 
 const list = document.querySelector(".cards");
 
@@ -38,13 +41,20 @@ initialCards.forEach(function (data) {
   list.append(card);
 });
 
+function resetPopup(popup) {
+  const form = popup.querySelector('.popup__form');
+  if (form) {
+    form.reset();
+  }
+}
+
 function handleFormEditSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(popupEdit);
 }
-console.log(handleOpenImage);
+
 function renderCard(data) {
   list.prepend(createCard(data, deleteCards));
 }
@@ -61,17 +71,28 @@ function handleFormAddSubmit(evt) {
 
 addButton.addEventListener('click', () => {
   openPopup(popupAdd);
-  closeEscapeAdd(popupAdd);
-  closeBackground(popupAdd);
 });
 
 editButton.addEventListener('click', function () {
   openPopup(popupEdit);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  closeEscapeAdd(popupEdit);
-  closeBackground(popupEdit);
 });
+
+popupAddCloseButton.addEventListener('click', () => {
+  closePopup(popupAdd);
+  resetPopup(popupAdd);
+});
+
+popupEditCloseButton.addEventListener('click', () => {
+  closePopup(popupEdit);
+  resetPopup(popupEdit);
+});
+
+imagePopupCloseButton.addEventListener('click', () => {
+  closePopup(popupImage);
+});
+
 
 formEdit.addEventListener("submit", handleFormEditSubmit);
 popupAddForm.addEventListener('submit', handleFormAddSubmit);
