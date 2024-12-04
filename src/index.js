@@ -65,7 +65,6 @@ function handleFormAddSubmit(evt) {
   const link = popupAddInputUrl.value; 
   renderCard({ name, link });
   closePopup(popupAdd);
-  submitAdd.disabled = true;
   submitAdd.classList.add('popup__save-button_status_disabled');
 }
 

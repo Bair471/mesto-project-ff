@@ -9,7 +9,7 @@ function createCard(data, onDelete, handleOpenImage, handleLikeClick) {
 
   titleCard.textContent = data.name; 
   titleImage.src = data.link;        
-  titleImage.alt = data.alt;
+  titleImage.alt = data.name;
 
   titleImage.addEventListener('click', () => handleOpenImage(titleImage.src, titleCard.textContent));
 
