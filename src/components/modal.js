@@ -1,6 +1,7 @@
 export function openPopup(popup) {
   const closeButton = popup.querySelector(".popup__close");
   popup.classList.add('popup_is-opened');
+  popup.addEventListener('click', closeBackground);
   closeButton.addEventListener('click', function () {
     closePopup(popup);
   });
@@ -25,7 +26,7 @@ export function closeEscape(evt) {
   }
 }
 
-function closeBackground(evt) {
+export function closeBackground(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.currentTarget);
   }

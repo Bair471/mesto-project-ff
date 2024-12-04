@@ -38,7 +38,7 @@ function handleOpenImage(imageLink, imageName) {
 }
 initialCards.forEach(function (data) {
   const card = createCard(data, deleteCards, handleOpenImage, handleLikeClick);
-  list.append(card);
+  list.prepend(card);
 });
 
 function resetPopup(popup) {
@@ -56,7 +56,7 @@ function handleFormEditSubmit(evt) {
 }
 
 function renderCard(data) {
-  list.prepend(createCard(data, deleteCards));
+  list.prepend(createCard(data, deleteCards, handleOpenImage, handleLikeClick));
 }
 
 function handleFormAddSubmit(evt) {
