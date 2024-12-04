@@ -3,15 +3,6 @@ import { initialCards } from './components/cards.js'
 import { createCard, deleteCards, handleLikeClick} from './components/card.js';
 import { openPopup, closePopup, closeBackground, closeEscapeAdd } from './components/modal.js';
 
-function handleOpenImage(imageLink, imageName) {
-  imagePopupImg.src = imageLink;
-  imagePopupImg.alt = imageName;  
-  imagePopupCaption.textContent = imageName;
-
-  openPopup(popupImage);
-}
-
-
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
 const editButton = profile.querySelector(".profile__edit-button");
@@ -35,8 +26,13 @@ const imagePopupImg = popupImage.querySelector(".popup__image");
 
 const list = document.querySelector(".cards");
 
-console.log(handleOpenImage);
+function handleOpenImage(imageLink, imageName) {
+  imagePopupImg.src = imageLink;
+  imagePopupImg.alt = imageName;  
+  imagePopupCaption.textContent = imageName;
 
+  openPopup(popupImage);
+}
 initialCards.forEach(function (data) {
   const card = createCard(data, deleteCards, handleOpenImage, handleLikeClick);
   list.append(card);
@@ -79,7 +75,3 @@ editButton.addEventListener('click', function () {
 
 formEdit.addEventListener("submit", handleFormEditSubmit);
 popupAddForm.addEventListener('submit', handleFormAddSubmit);
-
-initialCards.forEach((data) => {
-  renderCard(data);
-});

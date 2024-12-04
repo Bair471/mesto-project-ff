@@ -72,7 +72,6 @@ module.exports = {
           implementation: ImageMinimizerPlugin.imageminGenerate,
           options: {
             plugins: [
-              ["mozjpeg", { quality: 75 }],
               ["pngquant", { quality: [0.6, 0.8] }],
             ],
           },
