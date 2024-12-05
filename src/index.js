@@ -65,7 +65,6 @@ function handleFormAddSubmit(evt) {
   const link = popupAddInputUrl.value; 
   renderCard({ name, link });
   closePopup(popupAdd);
-  submitAdd.classList.add('popup__save-button_status_disabled');
 }
 
 addButton.addEventListener('click', () => {
@@ -99,5 +98,3 @@ formEdit.addEventListener("submit", handleFormEditSubmit);
 popupImage.addEventListener('click', closeActivePopupOnBackgroundClick);
 document.addEventListener('keydown', closeActivePopupOnEscape);
 
-formEdit.addEventListener("submit", handleFormEditSubmit);
-popupAddForm.addEventListener('submit', handleFormAddSubmit);
