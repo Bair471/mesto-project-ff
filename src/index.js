@@ -1,7 +1,7 @@
 import './index.css';
 import { initialCards } from './components/cards.js'
 import { createCard, deleteCards, handleLikeClick } from './components/card.js';
-import { openPopup, closePopup } from './components/modal.js';
+import { openPopup, closePopup, closeActivePopupOnBackgroundClick, closeActivePopupOnEscape } from './components/modal.js';
 
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
@@ -92,6 +92,12 @@ imagePopupCloseButton.addEventListener('click', () => {
   closePopup(popupImage);
 });
 
+popupAdd.addEventListener('click', closeActivePopupOnBackgroundClick);
+popupAddForm.addEventListener('submit', handleFormAddSubmit);
+popupEdit.addEventListener('click', closeActivePopupOnBackgroundClick);
+formEdit.addEventListener("submit", handleFormEditSubmit);
+popupImage.addEventListener('click', closeActivePopupOnBackgroundClick);
+document.addEventListener('keydown', closeActivePopupOnEscape);
 
 formEdit.addEventListener("submit", handleFormEditSubmit);
 popupAddForm.addEventListener('submit', handleFormAddSubmit);
