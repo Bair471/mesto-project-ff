@@ -1,15 +1,13 @@
 import './index.css';
 import { initialCards } from './components/cards.js'
 import { createCard, deleteCards, handleLikeClick } from './components/card.js';
-import { openPopup, closePopup, closeActivePopupOnBackgroundClick, closeActivePopupOnEscape } from './components/modal.js';
+import { openPopup, closePopup, closeActivePopupOnBackgroundClick } from './components/modal.js';
 
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
 const editButton = profile.querySelector(".profile__edit-button");
 
 const formEdit = document.getElementById('edit-profile');
-const submitAdd = document.getElementById('edit-profile-submit-button');
-
 const nameInput = document.querySelector('.popup__input.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input.popup__input_type_description');
 const profileName = document.querySelector('.profile__title');

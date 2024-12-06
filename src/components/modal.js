@@ -8,12 +8,12 @@ function closeActivePopup() {
 }
 
 export function openPopup(popup) {
-  popup.classList.add(popupOpenClass);
+  popup.classList.add('popup_is-opened');
   document.addEventListener('keydown', closeActivePopupOnEscape);
 }
 
 export function closePopup(popup) {
-  popup.classList.remove(popupOpenClass);
+  popup.classList.remove('popup_is-opened');
   document.removeEventListener('keydown', closeActivePopupOnEscape);
 }
 
