@@ -9,4 +9,5 @@
 @import url('./public/blocks/popup/popup.css');
 @import url('./public/blocks/popup/_is-animated/popup_is-animated.css');
 @import url('./public/blocks/popup/_is-opened/popup_is-opened.css');
+@import url('./public/vendor/fonts.css');
 
