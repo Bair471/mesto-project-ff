@@ -1,7 +1,7 @@
 const popupOpenClass = 'popup_is-opened';
 
 function closeActivePopup() {
-  const activePopup = document.querySelector(popupOpenClass);
+  const activePopup = document.querySelector('.popup_is-opened');
   if (activePopup) {
     closePopup(activePopup);
   }
@@ -9,10 +9,12 @@ function closeActivePopup() {
 
 export function openPopup(popup) {
   popup.classList.add(popupOpenClass);
+  document.addEventListener('keydown', closeActivePopupOnEscape);
 }
 
 export function closePopup(popup) {
   popup.classList.remove(popupOpenClass);
+  document.removeEventListener('keydown', closeActivePopupOnEscape);
 }
 
 export function closeActivePopupOnEscape(evt) {

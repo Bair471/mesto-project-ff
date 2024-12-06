@@ -11,7 +11,7 @@ function createCard(data, onDelete, handleOpenImage, handleLikeClick) {
   titleImage.src = data.link;        
   titleImage.alt = data.name;
 
-  titleImage.addEventListener('click', () => handleOpenImage(titleImage.src, titleCard.name));
+  titleImage.addEventListener('click', () => handleOpenImage(data.link, data.name));
 
   buttonLike.addEventListener('click', handleLikeClick);
   deleteButton.addEventListener('click', function handleDeleteClick() {

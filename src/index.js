@@ -65,6 +65,7 @@ function handleFormAddSubmit(evt) {
   const link = popupAddInputUrl.value; 
   renderCard({ name, link });
   closePopup(popupAdd);
+  resetPopup(popupAdd);
 }
 
 addButton.addEventListener('click', () => {
@@ -79,12 +80,10 @@ editButton.addEventListener('click', function () {
 
 popupAddCloseButton.addEventListener('click', () => {
   closePopup(popupAdd);
-  resetPopup(popupAdd);
 });
 
 popupEditCloseButton.addEventListener('click', () => {
   closePopup(popupEdit);
-  resetPopup(popupEdit);
 });
 
 imagePopupCloseButton.addEventListener('click', () => {
@@ -96,5 +95,5 @@ popupAddForm.addEventListener('submit', handleFormAddSubmit);
 popupEdit.addEventListener('click', closeActivePopupOnBackgroundClick);
 formEdit.addEventListener("submit", handleFormEditSubmit);
 popupImage.addEventListener('click', closeActivePopupOnBackgroundClick);
-document.addEventListener('keydown', closeActivePopupOnEscape);
+
 
