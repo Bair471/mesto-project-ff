@@ -32,6 +32,16 @@ const updateUser = (data) => {
   }).then(handleResponse); // Используем handleResponse
 }
 
+const updateAvatar = (data) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: data.avatar,
+    }),
+  }).then(handleResponse); // Используем handleResponse
+}
+
 const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     method: "GET",
@@ -72,5 +82,5 @@ const addLike = (cardId) => {
     .then(handleResponse); // Используем handleResponse
 }
 
-export { createNewCards, getInitialCards, getInitialUser, updateUser, deleteCard, addLike, removeLike };
+export { createNewCards, getInitialCards, getInitialUser, updateUser, deleteCard, addLike, removeLike, updateAvatar };
 

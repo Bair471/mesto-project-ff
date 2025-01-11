@@ -1,8 +1,10 @@
 import { addLike, removeLike } from "./api.js";
+
 // Функция для удаления карточки из DOM
 function deleteCardsFromHTML(deleteButton) {
   deleteButton.closest('.card').remove();
 }
+
 // Функция для создания карточки
 function createCard(card, onDelete, handleOpenImage) {
   const cardTemplate = document.getElementById('card-template');
@@ -11,7 +13,7 @@ function createCard(card, onDelete, handleOpenImage) {
   const titleCard = cardsElement.querySelector('.card__title');
   const buttonLike = cardsElement.querySelector('.card__like-button');
   const deleteButton = cardsElement.querySelector('.card__delete-button');
-  const likeCounter = cardsElement.querySelector('.card__like-count');
+  const likeCounter = cardsElement.querySelector('.card__like-counter');
 
   const cardId = card._id;
   const mine = card.mine;

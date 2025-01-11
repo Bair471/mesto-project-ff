@@ -11,6 +11,17 @@
   display: flex;
   align-items: center;
   padding: 36px 0;
+} 
+
+.profile__edit-icon {
+  padding: 48px;
+  opacity: 0;
+}
+
+.profile__edit-icon:hover {
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 480px) {
