@@ -16,9 +16,21 @@ const handleResponse = res => {
 
 const getInitialUser = async () => {
   return fetch(config.baseUrl + "/users/me", {
+    method: "GET",
     headers: config.headers,
   }).then(handleResponse);  // Используем handleResponse вместо getResponse
 };
+
+const updateUser = (data) => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      name: data.name,
+      about: data.about,
+    }),
+  }).then(handleResponse); // Используем handleResponse
+}
 
 const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
@@ -34,8 +46,31 @@ const createNewCards = (data) => {
     headers: config.headers,
     body: JSON.stringify(data),
   }).then(handleResponse); // Используем handleResponse
-}   
+}
 
-export { createNewCards, getInitialCards, getInitialUser };
+const deleteCard = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers
+  })
+    .then(handleResponse); // Используем handleResponse
+}
 
+const removeLike = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers
+  })
+    .then(handleResponse); // Используем handleResponse
+}
+
+const addLike = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "PUT",
+    headers: config.headers
+  })
+    .then(handleResponse); // Используем handleResponse
+}
+
+export { createNewCards, getInitialCards, getInitialUser, updateUser, deleteCard, addLike, removeLike };
 

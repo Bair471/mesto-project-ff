@@ -1,35 +1,120 @@
-function createCard(data, onDelete, handleOpenImage, handleLikeClick) {
+// function createCard(card, onDelete, handleLikeClick, handleOpenImage) {
+//   const cardTemplate = document.getElementById('card-template');
+//   const cardsElement = cardTemplate.content.cloneNode(true);
+//   const titleImage = cardsElement.querySelector('.card__image');
+//   const titleCard = cardsElement.querySelector('.card__title');
+//   const buttonLike = cardsElement.querySelector('.card__like-button');
+//   const deleteButton = cardsElement.querySelector('.card__delete-button');
+//   const likeCounter = cardsElement.querySelector('.card__like-counter');
+
+//   const cardId = card._id;
+//   const mine = card.mine;
+//   titleCard.textContent = card.name;
+//   titleImage.src = card.link;
+//   titleImage.alt = card.name;
+//   cardLikeCount.textContent = card.likes.length;
+
+
+//   titleImage.addEventListener('click', () => handleOpenImage(card.link, card.name));
+//   buttonLike.addEventListener('click', () => {
+//     handleLikeClick(event);
+//     if (card.didILike) {
+//       likeCounter.textContent = parseInt(likeCounter.textContent) - 1;
+//     } else {
+//       likeCounter.textContent = parseInt(likeCounter.textContent) + 1;
+//     }
+//   });
+//   deleteButton.addEventListener('click', function handleDeleteClick() {
+//     onDelete(deleteButton, cardId, mine);
+//   });
+
+//   return cardsElement;
+// }
+
+// function handleLikeClick(evt) {
+//   if (evt.target.classList.contains('card__like-button')) {
+//       evt.target.classList.toggle('card__like-button_is-active');
+//   }
+// }
+
+// function deleteCardsFromHTML(deleteButton) {
+//   deleteButton.closest('.card').remove();
+// }
+
+// export { createCard, deleteCardsFromHTML, handleLikeClick };
+
+
+import { addLike, removeLike } from "./api.js";
+
+// Функция для удаления карточки из DOM
+function deleteCardsFromHTML(deleteButton) {
+  deleteButton.closest('.card').remove();
+}
+
+// Функция для создания карточки
+function createCard(card, onDelete, handleOpenImage) {
   const cardTemplate = document.getElementById('card-template');
   const cardsElement = cardTemplate.content.cloneNode(true);
   const titleImage = cardsElement.querySelector('.card__image');
   const titleCard = cardsElement.querySelector('.card__title');
   const buttonLike = cardsElement.querySelector('.card__like-button');
   const deleteButton = cardsElement.querySelector('.card__delete-button');
-  
+  const likeCounter = cardsElement.querySelector('.card__like-counter');
 
-  titleCard.textContent = data.name; 
-  titleImage.src = data.link;        
-  titleImage.alt = data.name;
+  const cardId = card._id;
+  const mine = card.mine;
+  titleCard.textContent = card.name;
+  titleImage.src = card.link;
+  titleImage.alt = card.name;
 
-  titleImage.addEventListener('click', () => handleOpenImage(data.link, data.name));
+  // Добавляем проверку на наличие likes
+  const likes = card.likes || []; // Если likes нет, ставим пустой массив
+  likeCounter.textContent = likes.length;
 
-  buttonLike.addEventListener('click', handleLikeClick);
-  deleteButton.addEventListener('click', function handleDeleteClick() {
-    onDelete(deleteButton);
+  // Проверка, поставил ли пользователь лайк
+  const isLiked = likes.some(like => like._id === card.mine);
+  if (isLiked) {
+    buttonLike.classList.add('card__like-button_is-active');
+  }
+
+  // Открытие изображения
+  titleImage.addEventListener('click', () => handleOpenImage(card.link, card.name));
+
+  // Логика клика на лайк (с сервером)
+  buttonLike.addEventListener('click', () => {
+    // Если лайк уже поставлен, удалим его
+    if (buttonLike.classList.contains('card__like-button_is-active')) {
+      removeLike(cardId)
+        .then(updatedCard => {
+          buttonLike.classList.remove('card__like-button_is-active');
+          likeCounter.textContent = updatedCard.likes.length;
+        })
+        .catch(err => {
+          console.log('Ошибка при удалении лайка:', err);
+        });
+    } else {
+      // Если лайк не поставлен, добавим его
+      addLike(cardId)
+        .then(updatedCard => {
+          buttonLike.classList.add('card__like-button_is-active');
+          likeCounter.textContent = updatedCard.likes.length;
+        })
+        .catch(err => {
+          console.log('Ошибка при добавлении лайка:', err);
+        });
+    }
   });
+
+  // Удаление карточки (если она твоя)
+  if (card.mine) {
+    deleteButton.addEventListener('click', function handleDeleteClick() {
+      onDelete(deleteButton, cardId, mine);
+    });
+  } else {
+    deleteButton.remove(); // Убираем кнопку удаления, если это не твоя карточка
+  }
 
   return cardsElement;
 }
 
-function handleLikeClick(evt) {
-  if (evt.target.classList.contains('card__like-button')) {
-      evt.target.classList.toggle('card__like-button_is-active');
-  }
-}
-
-function deleteCards(deleteButton) {
-  deleteButton.closest('.card').remove();
-}
-
-export { createCard, deleteCards, handleLikeClick };
-
+export { createCard, deleteCardsFromHTML };
