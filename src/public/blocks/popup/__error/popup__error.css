@@ -11,15 +11,16 @@
   }
   
   .popup__error:last-of-type {
-    top: 196px;
+    top: 189px;
   }
   
   .popup__error:first-of-type {
-    top: 138px;
+    top: 132px;
   }
   
   .popup__error_visible {
     display: block;
+    border-top: 1px solid red;
   }
   
   @media screen and (max-width: 568px) {

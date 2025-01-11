@@ -8,6 +8,7 @@
 @import url('./public/blocks/card/card.css');
 @import url('./public/blocks/popup/popup.css');
 @import url('./public/blocks/popup/__error/popup__error.css');
+@import url('./public/blocks/card/__card__like-container/card__like-container.css');
 @import url('./public/blocks/popup/__button/_disabled/popup__button_disabled.css');
 @import url('./public/blocks/popup/_is-animated/popup_is-animated.css');
 @import url('./public/blocks/popup/_is-opened/popup_is-opened.css');

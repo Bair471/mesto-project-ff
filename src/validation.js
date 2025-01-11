@@ -52,6 +52,14 @@ const checkInputValidity = (formElement, input, inputErrorClass, errorClass) => 
     input.classList.add(inputErrorClass); // Добавляем класс ошибки инпуту
     errorElement.textContent = input.validationMessage; // Выводим сообщение об ошибке
     errorElement.classList.add(errorClass); // Показываем элемент с ошибкой
+      if (input.validity.valueMissing) {
+        errorElement.textContent = 'Вы пропустили это поле.'; // Если поле пустое
+      } else if (input.validity.typeMismatch) {
+        errorElement.textContent = 'Введите адрес сайта.'; // Если формат данных неверен (например, email)
+      } else {
+        errorElement.textContent = input.validationMessage; // Стандартное сообщение об ошибке
+      }
+    errorElement.classList.add(errorClass);
   } else {
     input.classList.remove(inputErrorClass); // Убираем класс ошибки
     errorElement.textContent = ''; // Очищаем сообщение об ошибке
