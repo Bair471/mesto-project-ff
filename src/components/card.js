@@ -1,56 +1,8 @@
-// function createCard(card, onDelete, handleLikeClick, handleOpenImage) {
-//   const cardTemplate = document.getElementById('card-template');
-//   const cardsElement = cardTemplate.content.cloneNode(true);
-//   const titleImage = cardsElement.querySelector('.card__image');
-//   const titleCard = cardsElement.querySelector('.card__title');
-//   const buttonLike = cardsElement.querySelector('.card__like-button');
-//   const deleteButton = cardsElement.querySelector('.card__delete-button');
-//   const likeCounter = cardsElement.querySelector('.card__like-counter');
-
-//   const cardId = card._id;
-//   const mine = card.mine;
-//   titleCard.textContent = card.name;
-//   titleImage.src = card.link;
-//   titleImage.alt = card.name;
-//   cardLikeCount.textContent = card.likes.length;
-
-
-//   titleImage.addEventListener('click', () => handleOpenImage(card.link, card.name));
-//   buttonLike.addEventListener('click', () => {
-//     handleLikeClick(event);
-//     if (card.didILike) {
-//       likeCounter.textContent = parseInt(likeCounter.textContent) - 1;
-//     } else {
-//       likeCounter.textContent = parseInt(likeCounter.textContent) + 1;
-//     }
-//   });
-//   deleteButton.addEventListener('click', function handleDeleteClick() {
-//     onDelete(deleteButton, cardId, mine);
-//   });
-
-//   return cardsElement;
-// }
-
-// function handleLikeClick(evt) {
-//   if (evt.target.classList.contains('card__like-button')) {
-//       evt.target.classList.toggle('card__like-button_is-active');
-//   }
-// }
-
-// function deleteCardsFromHTML(deleteButton) {
-//   deleteButton.closest('.card').remove();
-// }
-
-// export { createCard, deleteCardsFromHTML, handleLikeClick };
-
-
 import { addLike, removeLike } from "./api.js";
-
 // Функция для удаления карточки из DOM
 function deleteCardsFromHTML(deleteButton) {
   deleteButton.closest('.card').remove();
 }
-
 // Функция для создания карточки
 function createCard(card, onDelete, handleOpenImage) {
   const cardTemplate = document.getElementById('card-template');
@@ -59,7 +11,7 @@ function createCard(card, onDelete, handleOpenImage) {
   const titleCard = cardsElement.querySelector('.card__title');
   const buttonLike = cardsElement.querySelector('.card__like-button');
   const deleteButton = cardsElement.querySelector('.card__delete-button');
-  const likeCounter = cardsElement.querySelector('.card__like-counter');
+  const likeCounter = cardsElement.querySelector('.card__like-count');
 
   const cardId = card._id;
   const mine = card.mine;
@@ -72,7 +24,7 @@ function createCard(card, onDelete, handleOpenImage) {
   likeCounter.textContent = likes.length;
 
   // Проверка, поставил ли пользователь лайк
-  const isLiked = likes.some(like => like._id === card.mine);
+  const isLiked = likes.some(like => like._id === card.userId);
   if (isLiked) {
     buttonLike.classList.add('card__like-button_is-active');
   }
