@@ -44,7 +44,7 @@ function createCard(card, onDelete, handleOpenImage) {
           likeCounter.textContent = updatedCard.likes.length;
         })
         .catch(err => {
-          throw new Error('Ошибка при удалении лайка: ' + err.message);
+          console.log('Ошибка при удалении лайка:', err);
         });
     } else {
       // Если лайк не поставлен, добавим его
@@ -54,7 +54,7 @@ function createCard(card, onDelete, handleOpenImage) {
           likeCounter.textContent = updatedCard.likes.length;
         })
         .catch(err => {
-          throw new Error('Ошибка при удалении лайка: ' + err.message);
+          console.log('Ошибка при добавлении лайка:', err);
         });
     }
   });
