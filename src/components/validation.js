@@ -1,4 +1,4 @@
-const validateFormProfile = (validationConfig) => {
+function enableValidation(validationConfig) {
   const formList = Array.from(
     document.querySelectorAll(validationConfig.formSelector)
   );
@@ -18,7 +18,7 @@ const validateFormProfile = (validationConfig) => {
       validationConfig.errorClass
     );
   });
-};
+}
 
 // Устанавливаем обработчики событий для всех инпутов
 const setEventListeners = (
@@ -38,7 +38,7 @@ const setEventListeners = (
       // Передаем formElement в checkInputValidity
       checkInputValidity(formElement, input, inputErrorClass, errorClass);
       // Проверка состояния кнопки отправки
-      validation(inputList, submitButton, inactiveButtonClass);
+      toggleButtonState(inputList, submitButton, inactiveButtonClass);
     });
   });
 };
@@ -68,19 +68,26 @@ const checkInputValidity = (formElement, input, inputErrorClass, errorClass) => 
 };
 
 // Функция для проверки всей формы и состояния кнопки
-function validation(inputList, submitButton, inactiveButtonClass) {
-  // Проверяем, если хоть одно поле невалидно
-  if (inputList.some((input) => !input.validity.valid)) {
-    submitButton.classList.add(inactiveButtonClass); // Отключаем кнопку
-    submitButton.disabled = true;
+function toggleButtonState(inputList, submitButton, inactiveButtonClass) {
+  if(inputList.some(input => !input.validity.valid)) {
+   disableSubmitButton(submitButton, inactiveButtonClass);
   } else {
-    submitButton.classList.remove(inactiveButtonClass); // Включаем кнопку
-    submitButton.disabled = false;
+   activeSubmitButton(submitButton, inactiveButtonClass);
   }
 };
 
+const disableSubmitButton = function(submitButton, inactiveButtonClass) {
+  submitButton.classList.add(inactiveButtonClass);
+  submitButton.disabled = true;
+}
+
+const activeSubmitButton = function(submitButton, inactiveButtonClass) {
+  submitButton.classList.remove(inactiveButtonClass);
+  submitButton.disabled = false;
+}
+
 // Функция для очистки валидации
-const clearValidation = (form, validationConfig) => {
+const clearValidation = (form, validationConfig, inactiveButtonClass) => {
   const inputs = Array.from(form.querySelectorAll(validationConfig.inputSelector));
   const submitButton = form.querySelector(validationConfig.submitButtonSelector);
 
@@ -91,8 +98,7 @@ const clearValidation = (form, validationConfig) => {
   });
 
   // Включаем кнопку отправки
-  submitButton.classList.remove(validationConfig.inactiveButtonClass);
-  submitButton.disabled = false;
+  activeSubmitButton(submitButton, inactiveButtonClass);
 };
 
 // Функция скрытия ошибки
@@ -102,4 +108,7 @@ const hideInputError = (input, errorElement, validationConfig) => {
   errorElement.classList.remove(validationConfig.errorClass); // Прячем элемент с ошибкой
 };
 
-export { validateFormProfile, clearValidation };
+export { enableValidation, clearValidation };
+
+
+

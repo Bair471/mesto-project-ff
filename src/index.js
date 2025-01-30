@@ -1,7 +1,7 @@
 import './index.css';
 import { createCard, deleteCardsFromHTML } from './components/card.js'; 
 import { openPopup, closePopup, closeActivePopupOnBackgroundClick, resetPopup } from './components/modal.js';
-import { validateFormProfile, clearValidation } from './components/validation.js';
+import { enableValidation, clearValidation } from './components/validation.js';
 import {
   createNewCards,
   deleteCard,
@@ -10,6 +10,7 @@ import {
   updateAvatar,
   updateUser
 } from './components/api.js';
+import { addLike, removeLike } from "./components/api.js";
 
 const profile = document.querySelector(".profile");
 const profileAddButton = profile.querySelector(".profile__add-button");
@@ -48,6 +49,7 @@ const popupTypeConfirmAcceptButton = popupTypeConfirm.querySelector(".confirm_ac
 
 const list = document.querySelector(".cards");
 
+let userId = null;
 let currentCardId = null;
 let currentDeleteButton = null;
 
@@ -55,6 +57,7 @@ function handleOpenImage(imageLink, imageName) {
   if (imagePopup) {
     const imagePopupCaption = imagePopup.querySelector(".popup__caption");
     const imagePopupImg = imagePopup.querySelector(".popup__image");
+   
     imagePopupImg.src = imageLink;
     imagePopupImg.alt = imageName;
     imagePopupCaption.textContent = imageName;
@@ -72,8 +75,8 @@ function handleFormEditSubmit(evt) {
     name: popupEditFormNameInput.value,
     about: popupEditFormJobInput.value
   }).then(() => {
-    profileName.textContent = popupEditFormNameInput.value;
-    profileDescription.textContent = popupEditFormJobInput.value;
+    profileName.textContent = userInfo.name;
+    profileDescription.textContent = userInfo.about;
     closePopup(popupEdit);
   }).catch((err) => {
     console.log('Ошибка при обновлении данных пользователя:', err);
@@ -83,7 +86,7 @@ function handleFormEditSubmit(evt) {
 }
 
 function renderCard(card) {
-  list.prepend(createCard(card, handleDeleteCard, handleOpenImage));
+  list.prepend(createCard(card, handleDeleteCard, handleOpenImage, handleLike, userId));
 }
 
 function handleFormAddSubmit(evt) {
@@ -94,8 +97,11 @@ function handleFormAddSubmit(evt) {
 
   const name = popupAddInputPlace.value;
   const link = popupAddInputUrl.value;
+  popupAddSubmitButton.classList.add(".popup__button_disabled");
+  popupAddSubmitButton.disabled = true;
+
   createNewCards({ name, link }).then((card) => {
-    renderCard({ _id: card._id, name, link, mine: true });
+    renderCard(card);
     closePopup(popupAdd);
     resetPopup(popupAdd);
   }).catch((err) => {
@@ -114,6 +120,18 @@ function handleFormAvatarSubmit(evt) {
   }).catch((err) => {
     console.log('Ошибка при обновлении аватара:', err);
   });
+}
+
+// Логика клика на лайк (с сервером)
+function handleLike(buttonLike, likeCounter, cardId) {
+  const isLiked = buttonLike.classList.contains('card__like-button_is-active')
+  const likeMethod = isLiked ? removeLike : addLike;
+  likeMethod(cardId) 
+          .then(updatedCard => { 
+            buttonLike.classList.toggle('card__like-button_is-active'); 
+            likeCounter.textContent = updatedCard.likes.length; 
+          })
+  .catch(err => console.log(`Ошибка при ${isLiked ? "удалении" : "добавлении"} лайка:`, err));
 }
 
 // Функция для удаления карточки
@@ -202,13 +220,13 @@ const validationConfig = {
   errorClass: "popup__error_visible",
 };
 
-validateFormProfile(validationConfig);
+enableValidation(validationConfig);
 
 // Получаем данные пользователя и карточек с сервера
 Promise.all([getInitialUser(), getInitialCards()])
   .then(([userInfo, initialCards]) => {
     // Данные пользователя
-    const userId = userInfo._id;
+    userId = userInfo._id;
     profileName.textContent = userInfo.name;
     profileDescription.textContent = userInfo.about;
 
@@ -217,16 +235,8 @@ Promise.all([getInitialUser(), getInitialCards()])
 
     // Рендерим карточки, полученные с сервера
     initialCards.forEach((card) => {
-      const newCard = createCard({
-        _id: card._id,
-        name: card.name,
-        link: card.link,
-        mine: card.owner._id === userId,
-        didILike: card.likes.some((like) => like._id === userId),
-        likes: card.likes,
-        userId
-      }, handleDeleteCard, handleOpenImage);
-      list.prepend(newCard);
+      // fix 7 - added user id, passing card
+      list.prepend(createCard(card, handleDeleteCard, handleOpenImage, handleLike, userId));
     });
   })
   .catch((err) => {
