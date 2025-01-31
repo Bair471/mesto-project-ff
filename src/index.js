@@ -91,14 +91,12 @@ function renderCard(card) {
 
 function handleFormAddSubmit(evt) {
   evt.preventDefault();
-
   const oldText = popupAddSubmitButton.textContent;
   popupAddSubmitButton.textContent = 'Сохранение...';
 
   const name = popupAddInputPlace.value;
   const link = popupAddInputUrl.value;
   popupAddSubmitButton.classList.add(".popup__button_disabled");
-  popupAddSubmitButton.disabled = true;
 
   createNewCards({ name, link }).then((card) => {
     renderCard(card);
@@ -167,11 +165,12 @@ function handleConfirmDeleteCard(evt) {
 }
 
 profileAddButton.addEventListener('click', () => {
+  clearValidation(popupAddForm, validationConfig, false);
   openPopup(popupAdd);
 });
 
 profileEditButton.addEventListener('click', function () {
-  clearValidation(popupEditForm, validationConfig);
+  clearValidation(popupEditForm, validationConfig, true);
   popupEditFormNameInput.value = profileName.textContent;
   popupEditFormJobInput.value = profileDescription.textContent;
   openPopup(popupEdit);
@@ -205,7 +204,7 @@ popupEditForm.addEventListener("submit", handleFormEditSubmit);
 popupTypeAvatar.addEventListener('click', closeActivePopupOnBackgroundClick);
 popupTypeAvatarForm.addEventListener('submit', handleFormAvatarSubmit);
 profileImage.addEventListener('click', () => {
-  clearValidation(popupTypeAvatarForm, validationConfig);
+  clearValidation(popupTypeAvatarForm, validationConfig, true);
   openPopup(popupTypeAvatar);
 });
 popupTypeConfirmForm.addEventListener('submit', handleConfirmDeleteCard);
@@ -222,7 +221,6 @@ const validationConfig = {
 
 enableValidation(validationConfig);
 
-// Получаем данные пользователя и карточек с сервера
 Promise.all([getInitialUser(), getInitialCards()])
   .then(([userInfo, initialCards]) => {
     // Данные пользователя

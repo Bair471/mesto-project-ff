@@ -56,9 +56,11 @@ const checkInputValidity = (formElement, input, inputErrorClass, errorClass) => 
         errorElement.textContent = 'Вы пропустили это поле.'; // Если поле пустое
       } else if (input.validity.typeMismatch) {
         errorElement.textContent = 'Введите адрес сайта.'; // Если формат данных неверен (например, email)
+      } else if (input.validity.patternMismatch) { 
+        errorElement.textContent = 'Введите данные в правильном формате.'; 
       } else {
         errorElement.textContent = input.validationMessage; // Стандартное сообщение об ошибке
-      }
+      } 
     errorElement.classList.add(errorClass);
   } else {
     input.classList.remove(inputErrorClass); // Убираем класс ошибки
@@ -87,7 +89,7 @@ const activeSubmitButton = function(submitButton, inactiveButtonClass) {
 }
 
 // Функция для очистки валидации
-const clearValidation = (form, validationConfig, inactiveButtonClass) => {
+const clearValidation = (form, validationConfig, submitEnabled) => {
   const inputs = Array.from(form.querySelectorAll(validationConfig.inputSelector));
   const submitButton = form.querySelector(validationConfig.submitButtonSelector);
 
@@ -97,8 +99,12 @@ const clearValidation = (form, validationConfig, inactiveButtonClass) => {
     hideInputError(input, errorElement, validationConfig);
   });
 
-  // Включаем кнопку отправки
-  activeSubmitButton(submitButton, inactiveButtonClass);
+  // fix 3
+  if (submitEnabled) {
+    activeSubmitButton(submitButton, validationConfig.inactiveButtonClass);
+  } else {
+    disableSubmitButton(submitButton, validationConfig.inactiveButtonClass);
+  }
 };
 
 // Функция скрытия ошибки
