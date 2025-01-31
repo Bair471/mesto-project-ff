@@ -1,5 +1,3 @@
-const popupOpenClass = 'popup_is-opened';
-
 function closeActivePopup() {
   const activePopup = document.querySelector('.popup_is-opened');
   if (activePopup) {

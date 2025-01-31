@@ -52,16 +52,15 @@ const checkInputValidity = (formElement, input, inputErrorClass, errorClass) => 
     input.classList.add(inputErrorClass); // Добавляем класс ошибки инпуту
     errorElement.textContent = input.validationMessage; // Выводим сообщение об ошибке
     errorElement.classList.add(errorClass); // Показываем элемент с ошибкой
-      if (input.validity.valueMissing) {
-        errorElement.textContent = 'Вы пропустили это поле.'; // Если поле пустое
-      } else if (input.validity.typeMismatch) {
-        errorElement.textContent = 'Введите адрес сайта.'; // Если формат данных неверен (например, email)
-      } else if (input.validity.patternMismatch) { 
-        errorElement.textContent = 'Введите данные в правильном формате.'; 
-      } else {
-        errorElement.textContent = input.validationMessage; // Стандартное сообщение об ошибке
-      } 
-    errorElement.classList.add(errorClass);
+    if (input.validity.valueMissing) {
+      errorElement.textContent = 'Вы пропустили это поле.'; // Если поле пустое
+    } else if (input.validity.typeMismatch) {
+      errorElement.textContent = 'Введите адрес сайта.'; // Если формат данных неверен (например, email)
+    } else if (input.validity.patternMismatch) { 
+      errorElement.textContent = 'Введите данные в правильном формате.'; 
+    } else {
+      errorElement.textContent = input.validationMessage; // Стандартное сообщение об ошибке
+    } 
   } else {
     input.classList.remove(inputErrorClass); // Убираем класс ошибки
     errorElement.textContent = ''; // Очищаем сообщение об ошибке
@@ -76,17 +75,17 @@ function toggleButtonState(inputList, submitButton, inactiveButtonClass) {
   } else {
    activeSubmitButton(submitButton, inactiveButtonClass);
   }
-};
+}
 
 const disableSubmitButton = function(submitButton, inactiveButtonClass) {
   submitButton.classList.add(inactiveButtonClass);
   submitButton.disabled = true;
-}
+};
 
 const activeSubmitButton = function(submitButton, inactiveButtonClass) {
   submitButton.classList.remove(inactiveButtonClass);
   submitButton.disabled = false;
-}
+};
 
 // Функция для очистки валидации
 const clearValidation = (form, validationConfig, submitEnabled) => {

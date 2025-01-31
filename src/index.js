@@ -241,23 +241,3 @@ Promise.all([getInitialUser(), getInitialCards()])
   .catch((err) => {
     console.log('Ошибка при загрузке данных:', err);
   });
-
-  Promise.all([getInitialUser(), getInitialCards()]) 
-  .then(([userInfo, initialCards]) => { 
-    // Данные пользователя 
-    const userId = userInfo._id; 
-    profileName.textContent = userInfo.name; 
-    profileDescription.textContent = userInfo.about; 
- 
-    // Проверяем, существует ли элемент профиля для аватара 
-    profileImage.style.backgroundImage = `url(${userInfo.avatar})`; 
-    
-    // Рендерим карточки, полученные с сервера 
-    initialCards.forEach((card) => { 
-      const newCard = createCard(card, handleDeleteCard, handleOpenImage, userId); 
-      list.prepend(newCard); 
-    }); 
-  }) 
-  .catch((err) => { 
-    console.log('Ошибка при загрузке данных:', err); 
-  }); 
