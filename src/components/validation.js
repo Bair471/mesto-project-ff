@@ -45,26 +45,18 @@ const setEventListeners = (
 
 // Функция проверки валидности инпута
 const checkInputValidity = (formElement, input, inputErrorClass, errorClass) => {
-  // Ищем элемент ошибки, используя класс, который заканчивается на '-error' (например, 'name-error')
   const errorElement = formElement.querySelector(`.${input.id}-error`);
 
-  if (!input.validity.valid) {
-    input.classList.add(inputErrorClass); // Добавляем класс ошибки инпуту
-    errorElement.textContent = input.validationMessage; // Выводим сообщение об ошибке
-    errorElement.classList.add(errorClass); // Показываем элемент с ошибкой
-    if (input.validity.valueMissing) {
-      errorElement.textContent = 'Вы пропустили это поле.'; // Если поле пустое
-    } else if (input.validity.typeMismatch) {
-      errorElement.textContent = 'Введите адрес сайта.'; // Если формат данных неверен (например, email)
-    } else if (input.validity.patternMismatch) { 
-      errorElement.textContent = 'Введите данные в правильном формате.'; 
-    } else {
-      errorElement.textContent = input.validationMessage; // Стандартное сообщение об ошибке
-    } 
+  if (input.validity.patternMismatch) {  
+    input.setCustomValidity(input.dataset.errorMessage);  
+  } else {  
+    input.setCustomValidity("");  
+  } 
+  if (input.validity.valid) { 
+    hideInputError(input, errorElement, inputErrorClass, errorClass); 
   } else {
-    input.classList.remove(inputErrorClass); // Убираем класс ошибки
-    errorElement.textContent = ''; // Очищаем сообщение об ошибке
-    errorElement.classList.remove(errorClass); // Прячем элемент с ошибкой
+    errorElement.textContent = input.validationMessage;  
+    errorElement.classList.add(errorClass); 
   }
 };
 
@@ -95,7 +87,7 @@ const clearValidation = (form, validationConfig, submitEnabled) => {
   // Очищаем все ошибки
   inputs.forEach((input) => {
     const errorElement = form.querySelector(`.${input.id}-error`);
-    hideInputError(input, errorElement, validationConfig);
+    hideInputError(input, errorElement, validationConfig.inputErrorClass, validationConfig.errorClass);
   });
 
   // fix 3
@@ -107,10 +99,10 @@ const clearValidation = (form, validationConfig, submitEnabled) => {
 };
 
 // Функция скрытия ошибки
-const hideInputError = (input, errorElement, validationConfig) => {
-  input.classList.remove(validationConfig.inputErrorClass);
-  errorElement.textContent = ''; // Очищаем сообщение об ошибке
-  errorElement.classList.remove(validationConfig.errorClass); // Прячем элемент с ошибкой
+const hideInputError = (input, errorElement, inputErrorClass, errorClass) => {
+  input.classList.remove(inputErrorClass);
+  errorElement.textContent = "";
+  errorElement.classList.remove(errorClass);
 };
 
 export { enableValidation, clearValidation };
